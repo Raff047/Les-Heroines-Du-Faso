@@ -1,0 +1,98 @@
+{
+  "project_info": {
+    "project_number": "427557603199",
+    "project_id": "womens-wellness-app",
+    "storage_bucket": "womens-wellness-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:427557603199:android:1f06f4e53f5225e63bbc4a",
+        "android_client_info": {
+          "package_name": "com.example.health_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "427557603199-2dkebodci7ckt45i0q9icd15u9t705vs.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.health_app",
+            "certificate_hash": "121b38101bc83134b8005a7fdd394b15587eedd3"
+          }
+        },
+        {
+          "client_id": "427557603199-qddrb29nsfro3ujmo4n4h3ue0bq50rtl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCa8ZsrdXnT9naZ4bhjzjMB_QQftOXfjbA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "427557603199-qddrb29nsfro3ujmo4n4h3ue0bq50rtl.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "427557603199-be2itfeq6ifffsrkvm2p641njl0t98tr.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.womensWellnessApp"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:427557603199:android:762574bdab01cbf03bbc4a",
+        "android_client_info": {
+          "package_name": "com.example.womens_wellness_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "427557603199-90c9o8g9cardie7uge1opkdgoeb1e2g7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.womens_wellness_app",
+            "certificate_hash": "121b38101bc83134b8005a7fdd394b15587eedd3"
+          }
+        },
+        {
+          "client_id": "427557603199-qddrb29nsfro3ujmo4n4h3ue0bq50rtl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCa8ZsrdXnT9naZ4bhjzjMB_QQftOXfjbA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "427557603199-qddrb29nsfro3ujmo4n4h3ue0bq50rtl.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "427557603199-be2itfeq6ifffsrkvm2p641njl0t98tr.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.womensWellnessApp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
