@@ -7,7 +7,6 @@ import 'package:health_app/features/professionals/chat/screens/start_chat.dart';
 import 'package:health_app/models/public_user_model.dart';
 import 'package:health_app/theme/pallete.dart';
 import 'package:intl/intl.dart';
-
 import '../../../../core/common/widgets/no_conversations.dart';
 import '../../../../models/chat_request.dart';
 
@@ -44,7 +43,6 @@ class _ProfessionalsChatScreenState
   @override
   Widget build(BuildContext context) {
     final selectedSender = ref.watch(selectedSenderProvider.notifier);
-
     return SafeArea(
       child: Scaffold(
         extendBodyBehindAppBar: true,
@@ -84,12 +82,6 @@ class _ProfessionalsChatScreenState
                           phoneNumber: senderData.phoneNumber,
                           role: senderData.role,
                         );
-
-                        // final senderData = ref.watch(
-                        //     publicUserDataStreamProvider(
-                        //         chatRequest.chatRequestID));
-                        // print(senderData);
-
                         Navigator.push(
                             context,
                             MaterialPageRoute(

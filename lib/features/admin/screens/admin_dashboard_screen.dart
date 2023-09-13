@@ -54,203 +54,214 @@ class _AdminDashboardScreenState extends ConsumerState<AdminDashboardScreen> {
     return Scaffold(
         extendBodyBehindAppBar: true,
         body: Center(
-          child: Column(children: [
-            AdminPanel(size: size, admin: admin, greeting: 'Bienvenue'),
-            Container(
-              height: 400,
-              padding: EdgeInsets.symmetric(vertical: 16),
-              child: NotificationListener<ScrollNotification>(
-                onNotification: _scrollNotification,
-                child: ListView(
-                    controller: listScrollController,
-                    scrollDirection: Axis.horizontal,
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      ProfessionalsManagementScreen()));
-                        },
-                        child: AnimatedContainer(
-                          duration: Duration(milliseconds: 100),
-                          transform: Matrix4.rotationZ(
-                              scrollDirection == ScrollDirection.forward
-                                  ? 0.07
-                                  : scrollDirection == ScrollDirection.reverse
-                                      ? -0.07
-                                      : 0),
-                          width: 200,
-                          margin: EdgeInsets.symmetric(
-                              horizontal: 16, vertical: 16),
-                          padding:
-                              EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                          decoration: BoxDecoration(
-                              color: Pallete.bgDarkerShade,
-                              borderRadius: BorderRadius.circular(16),
-                              boxShadow: [
-                                BoxShadow(
-                                    color: Colors.green.shade300,
-                                    offset: Offset(-6, 4),
-                                    blurRadius: 10)
-                              ]),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              SvgPicture.asset(
-                                'assets/images/doctor.svg',
-                                width: 200,
-                                height: 200,
-                              ),
-                              Padding(
-                                  padding: EdgeInsets.symmetric(vertical: 16)),
-                              Text(
-                                'Gestion des professionnels',
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 24,
-                                    fontWeight: FontWeight.bold),
-                              )
-                            ],
+          child: SafeArea(
+            child: Column(children: [
+              AdminPanel(size: size, admin: admin, greeting: 'Bienvenue'),
+              Container(
+                height: 400,
+                padding: EdgeInsets.symmetric(vertical: 16),
+                child: NotificationListener<ScrollNotification>(
+                  onNotification: _scrollNotification,
+                  child: ListView(
+                      controller: listScrollController,
+                      scrollDirection: Axis.horizontal,
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        ProfessionalsManagementScreen()));
+                          },
+                          child: AnimatedContainer(
+                            duration: Duration(milliseconds: 100),
+                            transform: Matrix4.rotationZ(
+                                scrollDirection == ScrollDirection.forward
+                                    ? 0.07
+                                    : scrollDirection == ScrollDirection.reverse
+                                        ? -0.07
+                                        : 0),
+                            width: 200,
+                            margin: EdgeInsets.symmetric(
+                                horizontal: 16, vertical: 16),
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 16, vertical: 8),
+                            decoration: BoxDecoration(
+                                color: Pallete.bgDarkerShade,
+                                borderRadius: BorderRadius.circular(16),
+                                boxShadow: [
+                                  BoxShadow(
+                                      color: Colors.green.shade300,
+                                      offset: Offset(-6, 4),
+                                      blurRadius: 10)
+                                ]),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                SvgPicture.asset(
+                                  'assets/images/doctor.svg',
+                                  width: 200,
+                                  height: 200,
+                                ),
+                                Padding(
+                                    padding:
+                                        EdgeInsets.symmetric(vertical: 16)),
+                                Expanded(
+                                  child: Text(
+                                    'Professionnels',
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                )
+                              ],
+                            ),
                           ),
                         ),
-                      ),
-                      // 2222222222222222222222
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      ManagersManagementScreen()));
-                        },
-                        child: AnimatedContainer(
-                          duration: Duration(milliseconds: 100),
-                          transform: Matrix4.rotationZ(
-                              scrollDirection == ScrollDirection.forward
-                                  ? 0.07
-                                  : scrollDirection == ScrollDirection.reverse
-                                      ? -0.07
-                                      : 0),
-                          width: 200,
-                          margin: EdgeInsets.symmetric(
-                              horizontal: 16, vertical: 16),
-                          padding:
-                              EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                          decoration: BoxDecoration(
-                              color: Pallete.bgDarkerShade,
-                              borderRadius: BorderRadius.circular(16),
-                              boxShadow: [
-                                BoxShadow(
-                                    color: Colors.lightBlue.withOpacity(0.6),
-                                    offset: Offset(-6, 4),
-                                    blurRadius: 10)
-                              ]),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              SvgPicture.asset(
-                                'assets/images/manager.svg',
-                                width: 200,
-                                height: 200,
-                              ),
-                              Padding(
-                                  padding: EdgeInsets.symmetric(vertical: 16)),
-                              Text(
-                                'Gestionnaires',
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 24,
-                                    fontWeight: FontWeight.bold),
-                              )
-                            ],
+                        // 2222222222222222222222
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        ManagersManagementScreen()));
+                          },
+                          child: AnimatedContainer(
+                            duration: Duration(milliseconds: 100),
+                            transform: Matrix4.rotationZ(
+                                scrollDirection == ScrollDirection.forward
+                                    ? 0.07
+                                    : scrollDirection == ScrollDirection.reverse
+                                        ? -0.07
+                                        : 0),
+                            width: 200,
+                            margin: EdgeInsets.symmetric(
+                                horizontal: 16, vertical: 16),
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 16, vertical: 8),
+                            decoration: BoxDecoration(
+                                color: Pallete.bgDarkerShade,
+                                borderRadius: BorderRadius.circular(16),
+                                boxShadow: [
+                                  BoxShadow(
+                                      color: Colors.lightBlue.withOpacity(0.6),
+                                      offset: Offset(-6, 4),
+                                      blurRadius: 10)
+                                ]),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                SvgPicture.asset(
+                                  'assets/images/manager.svg',
+                                  width: 200,
+                                  height: 200,
+                                ),
+                                Padding(
+                                    padding:
+                                        EdgeInsets.symmetric(vertical: 16)),
+                                FittedBox(
+                                  child: Text(
+                                    'Gestionnaires',
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                )
+                              ],
+                            ),
                           ),
                         ),
-                      ),
-                      //////33333333333333333333333
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => AddAdminScreen()));
-                        },
-                        child: AnimatedContainer(
-                          duration: Duration(milliseconds: 100),
-                          transform: Matrix4.rotationZ(
-                              scrollDirection == ScrollDirection.forward
-                                  ? 0.07
-                                  : scrollDirection == ScrollDirection.reverse
-                                      ? -0.07
-                                      : 0),
-                          width: 200,
-                          margin: EdgeInsets.symmetric(
-                              horizontal: 16, vertical: 16),
-                          padding:
-                              EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                          decoration: BoxDecoration(
-                              color: Pallete.bgDarkerShade,
-                              borderRadius: BorderRadius.circular(16),
-                              boxShadow: [
-                                BoxShadow(
-                                    color: Colors.lightBlue.withOpacity(0.6),
-                                    offset: Offset(-6, 4),
-                                    blurRadius: 10)
-                              ]),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              SvgPicture.asset(
-                                'assets/images/admin.svg',
-                                width: 200,
-                                height: 200,
-                              ),
-                              Padding(
-                                  padding: EdgeInsets.symmetric(vertical: 16)),
-                              Text(
-                                'Ajouter administrateur',
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 24,
-                                    fontWeight: FontWeight.bold),
-                              )
-                            ],
+                        //////33333333333333333333333
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => AddAdminScreen()));
+                          },
+                          child: AnimatedContainer(
+                            duration: Duration(milliseconds: 100),
+                            transform: Matrix4.rotationZ(
+                                scrollDirection == ScrollDirection.forward
+                                    ? 0.07
+                                    : scrollDirection == ScrollDirection.reverse
+                                        ? -0.07
+                                        : 0),
+                            width: 200,
+                            margin: EdgeInsets.symmetric(
+                                horizontal: 16, vertical: 16),
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 16, vertical: 8),
+                            decoration: BoxDecoration(
+                                color: Pallete.bgDarkerShade,
+                                borderRadius: BorderRadius.circular(16),
+                                boxShadow: [
+                                  BoxShadow(
+                                      color: Colors.redAccent.withOpacity(0.6),
+                                      offset: Offset(-6, 4),
+                                      blurRadius: 10)
+                                ]),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                SvgPicture.asset(
+                                  'assets/images/admin.svg',
+                                  width: 200,
+                                  height: 200,
+                                ),
+                                Padding(
+                                    padding:
+                                        EdgeInsets.symmetric(vertical: 16)),
+                                Expanded(
+                                  child: Text(
+                                    'Ajouter admin',
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                )
+                              ],
+                            ),
                           ),
                         ),
-                      ),
-                    ]),
+                      ]),
+                ),
               ),
-            ),
-            Expanded(child: Container()),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(12.0),
-                  child: SizedBox(
-                    width: size.width * 0.4,
-                    height: size.height * 0.05,
-                    child: CustomButton(
-                        onPressed: () {
-                          ref
-                              .watch(authControllerProvider.notifier)
-                              .signUserOut();
-                          Navigator.pushAndRemoveUntil(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const LoginScreen()),
-                              (route) => false);
-                        },
-                        text: 'Se deconnecter'),
-                  ),
-                )
-              ],
-            ),
-          ]),
+              Expanded(child: Container()),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(12.0),
+                    child: SizedBox(
+                      width: size.width * 0.4,
+                      height: size.height * 0.05,
+                      child: CustomButton(
+                          onPressed: () {
+                            ref
+                                .watch(authControllerProvider.notifier)
+                                .signUserOut();
+                            Navigator.pushAndRemoveUntil(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const LoginScreen()),
+                                (route) => false);
+                          },
+                          text: 'Se déconnecter'),
+                    ),
+                  )
+                ],
+              ),
+            ]),
+          ),
         ));
   }
 }
@@ -348,7 +359,7 @@ class AdminPanel extends StatelessWidget {
                       SizedBox(
                         height: 5.0,
                       ),
-                      Text('${admin!.name}!',
+                      Text('${admin?.name}!',
                           style: TextStyle(
                               fontSize: 28.0,
                               fontWeight: FontWeight.bold,

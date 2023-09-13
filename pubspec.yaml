@@ -54,6 +54,11 @@ dependencies:
   intl: ^0.17.0
   like_button: ^2.0.5
   flutter_svg: ^2.0.4
+  sliver_tools: ^0.2.9
+  material_design_icons_flutter: ^6.0.7096
+  flutter_speed_dial: ^6.2.0
+  dropdown_button2: ^2.0.0
+  liquid_swipe: ^3.0.0
 
 dev_dependencies:
   flutter_test:
@@ -86,9 +91,14 @@ flutter:
     - assets/images/community_generale.jpg
     - assets/images/reproductive1.jpg
     - assets/images/sexuelle_community.jpg
+    - assets/images/chat.jpg
+    - assets/images/onboarding-community.png
+    - assets/images/onboarding-livechat.png
+    - assets/images/onboarding-article.png
     - assets/images/doctor.svg
     - assets/images/manager.svg
     - assets/images/admin.svg
+    - assets/images/no_posts.svg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

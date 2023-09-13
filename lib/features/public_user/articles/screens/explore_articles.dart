@@ -27,11 +27,6 @@ class _ExploreArticlesState extends ConsumerState<ExploreArticles> {
           if (!snapshot.hasData) {
             return const Loader();
           }
-          // Map snapshot to model objects
-          final articles = snapshot.data!.docs
-              .map((doc) => Article.fromFirestore(
-                  doc as DocumentSnapshot<Map<String, dynamic>>))
-              .toList();
 
           // Group articles by category
           final articlesByCategory = <String, List<Article>>{};
@@ -103,31 +98,30 @@ class _ExploreArticlesState extends ConsumerState<ExploreArticles> {
                                         MediaQuery.of(context).size.width * 0.7,
                                     imageUrl: article.imageUrl,
                                   ),
+                                  const SizedBox(height: 8.0),
                                   Flexible(
                                     child: Text(
                                       article.title,
+                                      overflow: TextOverflow.ellipsis,
                                       maxLines: 2,
                                       style: Theme.of(context)
                                           .textTheme
                                           .bodyLarge!
                                           .copyWith(
                                             fontWeight: FontWeight.bold,
-                                            fontSize: 18.0,
-                                            height: 1.5,
+                                            fontSize: 16.0,
                                           ),
                                     ),
                                   ),
                                   Text(
                                     'il y a ${getTimeDifference(article.createdAt)}',
                                     maxLines: 1,
-                                    style:
-                                        Theme.of(context).textTheme.bodySmall!,
+                                    style: const TextStyle(fontSize: 10),
                                   ),
                                   Text(
                                     'Par Dr. ${article.authorName}',
                                     maxLines: 1,
-                                    style:
-                                        Theme.of(context).textTheme.bodySmall!,
+                                    style: const TextStyle(fontSize: 10),
                                   ),
                                 ],
                               ),

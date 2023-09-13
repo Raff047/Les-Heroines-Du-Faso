@@ -41,4 +41,18 @@ class AdminController {
       showSnackBar(context: context!, content: e.toString());
     }
   }
+
+  //create manager user
+  Future<void> createManager(
+      {required String name,
+      required String email,
+      required String password,
+      required BuildContext? context}) async {
+    try {
+      await _adminRepository.createManager(name, email, password);
+      showSnackBar(context: context!, content: '$email a été ajouté');
+    } catch (e) {
+      showSnackBar(context: context!, content: e.toString());
+    }
+  }
 }

@@ -13,10 +13,8 @@ class Professional extends UserModel {
 
   @override
   Map<String, dynamic> toMap() {
-    final result = <String, dynamic>{};
-
+    final result = super.toMap();
     result.addAll({'specializedIn': specializedIn});
-
     return result;
   }
 

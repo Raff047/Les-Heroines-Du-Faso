@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:health_app/theme/pallete.dart';
 import 'package:intl/intl.dart';
 import 'package:uuid/uuid.dart';
 
@@ -86,6 +87,19 @@ class _ProfessionalCommunityScreenState
     return ref.watch(getPostByIdStreamProvider(widget.postId)).when(
         data: (data) {
           return Scaffold(
+            appBar: widget.postImage == ''
+                ? AppBar(
+                    centerTitle: true,
+                    title: Text(
+                      'Publication de ${data.username}',
+                      style: const TextStyle(fontSize: 16.0),
+                    ),
+                    elevation: 0,
+                    leading: IconButton(
+                        onPressed: () => Navigator.pop(context),
+                        icon: const Icon(Icons.arrow_back_ios_new_sharp)),
+                  )
+                : null,
             extendBodyBehindAppBar: true,
             bottomNavigationBar: SafeArea(
               child: Container(
@@ -224,10 +238,15 @@ class _ProfessionalCommunityScreenState
                         ),
                         Padding(
                           padding: const EdgeInsets.symmetric(vertical: 15.0),
-                          child: ExpandableText(
-                            text: data.description,
-                            maxLength: data.description.length ~/ 2,
-                          ),
+                          child: data.description.length >= 140
+                              ? ExpandableText(
+                                  text: data.description,
+                                  maxLength: data.description.length ~/ 2,
+                                )
+                              : Text(
+                                  data.description,
+                                  style: const TextStyle(fontSize: 16.0),
+                                ),
                         ),
                         const Divider(
                           thickness: 1.0,
@@ -320,7 +339,7 @@ class CommentCard extends StatelessWidget {
               padding:
                   const EdgeInsets.symmetric(horizontal: 15.0, vertical: 10.0),
               decoration: const BoxDecoration(
-                  color: Color(0xff4c4f64),
+                  color: Pallete.bgDarkerShade,
                   borderRadius: BorderRadius.only(
                     topRight: Radius.circular(20),
                     bottomRight: Radius.circular(20),

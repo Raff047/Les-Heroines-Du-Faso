@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class TextToSpeech extends StatelessWidget {
   final String text;
@@ -8,7 +9,7 @@ class TextToSpeech extends StatelessWidget {
   final FlutterTts tts = FlutterTts();
 
   Future<void> speak(text) async {
-    await tts.setLanguage('en-CA');
+    await tts.setLanguage('fr-FR');
     await tts.setPitch(1);
     await tts.speak(text);
   }
@@ -18,8 +19,8 @@ class TextToSpeech extends StatelessWidget {
     return InkWell(
       onTap: () => speak(text),
       child: Icon(
-        Icons.spatial_audio,
-        size: 30,
+        MdiIcons.volumeHigh,
+        size: 32,
         color: Colors.pink.shade300,
       ),
     );

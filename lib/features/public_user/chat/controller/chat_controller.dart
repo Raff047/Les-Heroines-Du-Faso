@@ -9,7 +9,7 @@ final loadProfessionalsProvider = FutureProvider<List<Professional>>(
 
 // CLASS PROVIDER
 final publicUserChatControllerProvider = Provider((ref) =>
-    PublicUserChatController(ref.watch(publicUserChatRepositoryProvider)));
+    PublicUserChatController(ref.read(publicUserChatRepositoryProvider)));
 
 // message provider
 final messageProvider = StateProvider<Message?>((ref) => null);

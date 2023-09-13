@@ -1,7 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:health_app/features/auth/controller/auth_controller.dart';
 import 'package:health_app/features/professionals/chat/screens/chat.dart';
-import 'package:health_app/features/public_user/chat/screens/chat.dart';
 import '../../../../models/chat_message_model.dart';
 import '../../../../models/chat_request.dart';
 import '../../../public_user/chat/controller/chat_controller.dart';
@@ -22,7 +21,7 @@ final getChatRequestsStream = StreamProvider<List<ChatRequest>>((ref) {
 });
 
 // chat messages stream
-final getChatMessagesStream = StreamProvider((ref) {
+final getChatMessagesStream = StreamProvider<List<Message>>((ref) {
   final professionalChatController =
       ref.watch(professionalChatControllerProvider);
   return professionalChatController.messageStream();
@@ -35,7 +34,7 @@ class ProfessionalChatController {
   ProfessionalChatController(this._professionalChatRepository, this.ref);
 
   Stream<List<ChatRequest>> getChatRequestsStream() {
-    final proUID = ref.watch(professionalUserProvider)?.uid;
+    final proUID = ref.read(professionalUserProvider)?.uid;
     return _professionalChatRepository.getChatRequestsStream(proUID!);
   }
 
@@ -51,10 +50,11 @@ class ProfessionalChatController {
 
   // load a stream of messages
   Stream<List<Message>> messageStream() {
-    final String? selectedSenderUID = ref.watch(selectedSenderProvider).uid;
-    final String? currentProfessionalUID =
-        ref.watch(professionalUserProvider)?.uid;
+    final String currentProfessionalUID =
+        ref.watch(professionalUserProvider)!.uid;
+    final String selectedSenderUID = ref.watch(selectedSenderProvider).uid;
+
     return _professionalChatRepository.messageStream(
-        currentProfessionalUID!, selectedSenderUID!);
+        currentProfessionalUID, selectedSenderUID);
   }
 }

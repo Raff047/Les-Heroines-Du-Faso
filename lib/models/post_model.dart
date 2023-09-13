@@ -1,5 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-
 import 'package:flutter/foundation.dart';
 
 class Post {
@@ -11,7 +9,9 @@ class Post {
   final int commentCount;
   final String username;
   final String userUid;
+  final String userRole;
   final String userProfilePic;
+  final bool isPinned;
   final DateTime postedAt;
   Post({
     required this.id,
@@ -22,8 +22,10 @@ class Post {
     required this.commentCount,
     required this.username,
     required this.userUid,
+    required this.userRole,
     required this.userProfilePic,
     required this.postedAt,
+    required this.isPinned,
   });
 
   Post copyWith({
@@ -35,6 +37,7 @@ class Post {
     int? commentCount,
     String? username,
     String? userUid,
+    String? userRole,
     String? userProfilePic,
     DateTime? postedAt,
   }) {
@@ -47,24 +50,30 @@ class Post {
       commentCount: commentCount ?? this.commentCount,
       username: username ?? this.username,
       userUid: userUid ?? this.userUid,
+      userRole: userRole ?? this.userRole,
       userProfilePic: userProfilePic ?? this.userProfilePic,
       postedAt: postedAt ?? this.postedAt,
+      isPinned: isPinned ?? this.isPinned,
     );
   }
 
   Map<String, dynamic> toMap() {
-    return <String, dynamic>{
-      'id': id,
-      'description': description,
-      'image': image,
-      'communityName': communityName,
-      'likes': likes,
-      'commentCount': commentCount,
-      'username': username,
-      'userUid': userUid,
-      'userProfilePic': userProfilePic,
-      'postedAt': postedAt.millisecondsSinceEpoch,
-    };
+    final result = <String, dynamic>{};
+
+    result.addAll({'id': id});
+    result.addAll({'description': description});
+    result.addAll({'image': image});
+    result.addAll({'communityName': communityName});
+    result.addAll({'likes': likes});
+    result.addAll({'commentCount': commentCount});
+    result.addAll({'username': username});
+    result.addAll({'userUid': userUid});
+    result.addAll({'userRole': userRole});
+    result.addAll({'userProfilePic': userProfilePic});
+    result.addAll({'postedAt': postedAt.millisecondsSinceEpoch});
+    result.addAll({'isPinned': isPinned});
+
+    return result;
   }
 
   factory Post.fromMap(Map<String, dynamic> map) {
@@ -73,26 +82,27 @@ class Post {
         description: map['description'] ?? '',
         image: map['image'] ?? '',
         communityName: map['communityName'] ?? '',
-        likes: List<String>.from(
-          (map['likes']),
-        ),
-        commentCount: map['commentCount'],
-        postedAt: DateTime.fromMillisecondsSinceEpoch(map['postedAt']),
-        userProfilePic: map['userProfilePic'] ?? '',
+        likes: List<String>.from(map['likes']),
+        commentCount: map['commentCount']?.toInt() ?? 0,
+        username: map['username'] ?? '',
         userUid: map['userUid'] ?? '',
-        username: map['username'] ?? '');
+        userRole: map['userRole'] ?? '',
+        userProfilePic: map['userProfilePic'] ?? '',
+        postedAt: DateTime.fromMillisecondsSinceEpoch(map['postedAt']),
+        isPinned: map['isPinned'] ?? '');
   }
 
   @override
   String toString() {
-    return 'Post(id: $id, description: $description, image: $image, communityName: $communityName, likes: $likes, commentCount: $commentCount, username: $username, userUid: $userUid, userProfilePic: $userProfilePic, postedAt: $postedAt)';
+    return 'Post(id: $id, description: $description, image: $image, communityName: $communityName, likes: $likes, commentCount: $commentCount, username: $username, userUid: $userUid, userRole: $userRole, userProfilePic: $userProfilePic, postedAt: $postedAt)';
   }
 
   @override
-  bool operator ==(covariant Post other) {
+  bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other.id == id &&
+    return other is Post &&
+        other.id == id &&
         other.description == description &&
         other.image == image &&
         other.communityName == communityName &&
@@ -100,6 +110,7 @@ class Post {
         other.commentCount == commentCount &&
         other.username == username &&
         other.userUid == userUid &&
+        other.userRole == userRole &&
         other.userProfilePic == userProfilePic &&
         other.postedAt == postedAt;
   }
@@ -114,6 +125,7 @@ class Post {
         commentCount.hashCode ^
         username.hashCode ^
         userUid.hashCode ^
+        userRole.hashCode ^
         userProfilePic.hashCode ^
         postedAt.hashCode;
   }

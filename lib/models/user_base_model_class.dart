@@ -20,7 +20,7 @@ class UserModel {
     String? name,
     String? email,
     String? phoneNumber,
-    String? profilePicUrl,
+    String? profilePic,
     String? role,
   }) {
     return UserModel(
@@ -28,7 +28,7 @@ class UserModel {
       name: name ?? this.name,
       email: email ?? this.email,
       phoneNumber: phoneNumber ?? this.phoneNumber,
-      profilePic: profilePicUrl ?? profilePic,
+      profilePic: profilePic ?? this.profilePic,
       role: role ?? this.role,
     );
   }
@@ -44,7 +44,7 @@ class UserModel {
     if (phoneNumber != null) {
       result.addAll({'phoneNumber': phoneNumber});
     }
-    result.addAll({'profilePicUrl': profilePic});
+    result.addAll({'profilePic': profilePic});
     result.addAll({'role': role});
 
     return result;
@@ -56,7 +56,7 @@ class UserModel {
       name: map['name'] ?? '',
       email: map['email'],
       phoneNumber: map['phoneNumber'],
-      profilePic: map['profilePicUrl'] ?? '',
+      profilePic: map['profilePic'] ?? '',
       role: map['role'] ?? '',
     );
   }

@@ -13,10 +13,8 @@ class PublicUser extends UserModel {
 
   @override
   Map<String, dynamic> toMap() {
-    final result = <String, dynamic>{};
-
+    final result = super.toMap();
     result.addAll({'phoneNumber': phoneNumber});
-
     return result;
   }
 

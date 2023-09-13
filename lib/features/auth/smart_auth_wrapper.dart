@@ -3,8 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:health_app/core/common/widgets/error.dart';
 import 'package:health_app/features/admin/screens/admin_dashboard_screen.dart';
-import 'package:health_app/features/auth/screens/login.dart';
-import 'package:health_app/features/manager/screens/manager_user_dashboard.dart';
+import 'package:health_app/features/onboarding/screens/onboarding_screen.dart';
 import 'package:health_app/features/professionals/dashboard/professional_user_dashboard.dart';
 import 'package:health_app/features/public_user/dashboard/public_user_dashboard.dart';
 import 'package:health_app/models/admin_user_model.dart';
@@ -12,6 +11,7 @@ import 'package:health_app/models/manager_user_model.dart';
 import 'package:health_app/models/professional_user_model.dart';
 import 'package:health_app/models/public_user_model.dart';
 import '../../core/common/widgets/loader.dart';
+import '../manager/dashboard/manager_dashboard.dart';
 import 'controller/auth_controller.dart';
 
 class SmartAuthWrapper extends ConsumerStatefulWidget {
@@ -33,6 +33,15 @@ class _SmartAuthWrapperState extends ConsumerState<SmartAuthWrapper> {
         .adminDataStream(data.uid)
         .first;
     ref.watch(adminUserProvider.notifier).update((state) => admin);
+    setState(() {});
+  }
+
+  void getManagerData(WidgetRef ref, User data) async {
+    manager = await ref
+        .watch(authControllerProvider.notifier)
+        .managerDataStream(data.uid)
+        .first;
+    ref.watch(managerUserProvider.notifier).update((state) => manager);
     setState(() {});
   }
 
@@ -73,7 +82,7 @@ class _SmartAuthWrapperState extends ConsumerState<SmartAuthWrapper> {
                     getAdminData(ref, data);
                     return const AdminDashboardScreen();
                   } else if (role == 'manager') {
-                    //TODO: upload data
+                    getManagerData(ref, data);
                     return const ManagerDashboardScreen();
                   } else if (role == 'professional') {
                     getProfessionalData(ref, data);
@@ -89,7 +98,7 @@ class _SmartAuthWrapperState extends ConsumerState<SmartAuthWrapper> {
                 loading: () => const Loader());
           } else {
             // user is not loggedIn
-            return const LoginScreen();
+            return const OnboardingScreen();
           }
         },
         error: (error, stackTrace) {

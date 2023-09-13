@@ -127,7 +127,6 @@ class AuthController extends StateNotifier<bool> {
       // await prefs.setString('userData', json.encode(staffUser?.toJson()));
       // Update provider state with user data
       if (userModel is Professional) {
-        print(' authController : ${userModel.name}');
         ref
             .watch(professionalUserProvider.notifier)
             .update((state) => userModel);

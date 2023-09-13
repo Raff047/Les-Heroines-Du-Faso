@@ -36,7 +36,6 @@ class PublicUserChatRepository {
     for (var doc in querySnapshot.docs) {
       professionals.add(Professional.fromMap(doc.data()));
     }
-    print('Loaded ${professionals.length} professionals');
     return professionals;
   }
 
@@ -74,7 +73,7 @@ class PublicUserChatRepository {
     final WidgetRef ref,
   ) async {
     try {
-      final selectedProfessional = ref.read(selectedProfessionalProvider);
+      final selectedProfessional = ref.watch(selectedProfessionalProvider);
       final currentPublicUser = ref.watch(publicUserProvider)!;
       var timesent = DateTime.now();
       if (textmessage != null) {

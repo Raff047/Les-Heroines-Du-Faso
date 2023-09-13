@@ -1,10 +1,12 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:health_app/core/common/widgets/error.dart';
 import 'package:health_app/features/auth/controller/auth_controller.dart';
 import 'package:health_app/features/professionals/chat/controller/chat_controller.dart';
 import 'package:health_app/features/professionals/chat/screens/chat.dart';
 import 'package:health_app/theme/pallete.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import '../../../../core/common/widgets/loader.dart';
 import '../../../../core/common/widgets/show_snack_bar.dart';
 
@@ -20,11 +22,13 @@ String? _message;
 
 class _StartChatScreenState extends ConsumerState<ProfessionalStartChatScreen> {
   final TextEditingController _controller = TextEditingController();
+  final ScrollController _messageController = ScrollController();
 
   @override
   void dispose() {
-    _controller.dispose();
     super.dispose();
+    _controller.dispose();
+    _messageController.dispose();
   }
 
   void sendMessage() {
@@ -37,32 +41,11 @@ class _StartChatScreenState extends ConsumerState<ProfessionalStartChatScreen> {
     }
   }
 
-  // get messages from db
-  Stream<QuerySnapshot<Map<String, dynamic>>> messageStream() {
-    final selectedSender = ref.watch(selectedSenderProvider.notifier).state;
-    final currentProfessional = ref.watch(professionalUserProvider);
-    final snapshot = FirebaseFirestore.instance
-        .collection('users')
-        .doc('professionals')
-        .collection('professionals')
-        .doc(currentProfessional?.uid)
-        .collection('messages')
-        .doc(selectedSender.uid)
-        .collection('messages')
-        .orderBy('timestamp', descending: true)
-        .snapshots();
-
-    return snapshot;
-  }
-
   @override
   Widget build(BuildContext context) {
-    final selectedSender = ref.watch(selectedSenderProvider.notifier).state;
-    // final message = ref.watch(messageProvider)!.senderId;
-    final currentProfessional = ref.watch(professionalUserProvider)!.uid;
-    // print('currentProfessional UID : $currentProfessional');
-    // print('selectedSender UID : ${selectedSender.uid}');
-
+    debugPrint('widget is rebuilding');
+    final selectedSender = ref.watch(selectedSenderProvider.notifier);
+    final currentProfessional = ref.read(professionalUserProvider)!.uid;
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
@@ -78,72 +61,74 @@ class _StartChatScreenState extends ConsumerState<ProfessionalStartChatScreen> {
       ),
       body: SafeArea(
         child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
+          padding: const EdgeInsets.symmetric(horizontal: 15),
           width: double.infinity,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               CircleAvatar(
-                radius: 55,
-                backgroundImage: NetworkImage(selectedSender.profilePic),
+                radius: 40,
+                backgroundImage: NetworkImage(selectedSender.state.profilePic),
               ),
               const SizedBox(
                 height: 10.0,
               ),
               Text(
-                selectedSender.name,
+                selectedSender.state.name,
                 style: const TextStyle(
-                  fontSize: 18.0,
+                  fontSize: 16.0,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              // Expanded(child: Container()),
+              const SizedBox(height: 20),
               StreamBuilder(
-                  stream: messageStream(),
-                  builder: ((context,
-                      AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
-                          snapshot) {
-                    if (!snapshot.hasData) {
+                  stream: ref
+                      .watch(professionalChatControllerProvider)
+                      .messageStream(),
+                  builder: ((context, messages) {
+                    if (!messages.hasData) {
                       return const Loader();
                     }
-                    final messages = snapshot.data!.docs;
-                    List<MessageBubble> messageBubbles = [];
-                    for (var message in messages) {
-                      final messageSenderID = message.data()['senderId'];
-                      final messageTxt = message.data()['content'];
-                      final messageWidget = MessageBubble(
-                        text: messageTxt,
-                        isMe: currentProfessional == messageSenderID,
-                      );
-                      messageBubbles.add(messageWidget);
-                    }
+                    SchedulerBinding.instance.addPostFrameCallback(
+                      (_) {
+                        _messageController.jumpTo(
+                            _messageController.position.maxScrollExtent);
+                      },
+                    );
+                    print(messages);
                     return Expanded(
-                      child: ListView(
-                        reverse: true,
-                        children: messageBubbles,
-                      ),
+                      child: ListView.builder(
+                          controller: _messageController,
+                          reverse: true,
+                          itemCount: messages.data!.length,
+                          itemBuilder: ((context, index) {
+                            return MessageBubble(
+                                text: messages.data![index].content,
+                                isMe: currentProfessional ==
+                                    messages.data![index].senderId);
+                          })),
                     );
 
                     // return Container();
                   })),
-
               Padding(
-                padding: const EdgeInsets.symmetric(vertical: 18.0),
-                child: TextField(
+                padding: const EdgeInsets.symmetric(vertical: 16.0),
+                child: TextFormField(
                   controller: _controller,
-                  cursorColor: Colors.black,
                   decoration: InputDecoration(
-                    contentPadding: const EdgeInsets.all(18.0),
-                    filled: true,
-                    suffixIcon: InkWell(
-                      onTap: sendMessage,
-                      child: Icon(
-                        Icons.send,
-                        color: Pallete.greenColor,
-                      ),
-                    ),
                     hintText: 'Message',
-                    hintStyle: const TextStyle(letterSpacing: 1.4),
+                    fillColor: Pallete.bgDarkerShade,
+                    suffixIcon: IconButton(
+                        onPressed: sendMessage,
+                        icon: Icon(
+                          MdiIcons.send,
+                          color: Pallete.greenColor,
+                        )),
+                    filled: true,
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide.none,
+                      borderRadius: BorderRadius.circular(20.0),
+                    ),
                   ),
                   onChanged: (value) {
                     setState(() {
@@ -175,6 +160,7 @@ class MessageBubble extends StatelessWidget {
         Container(
             margin: const EdgeInsets.all(5.0),
             padding: const EdgeInsets.all(10.0),
+            // width: MediaQuery.of(context).size.width * .6,
             decoration: BoxDecoration(
                 borderRadius: isMe
                     ? const BorderRadius.only(
@@ -190,7 +176,7 @@ class MessageBubble extends StatelessWidget {
                     : Colors.pink.shade200.withOpacity(0.8)),
             child: Text(
               text,
-              style: const TextStyle(),
+              style: const TextStyle(fontSize: 14),
             )),
       ],
     );

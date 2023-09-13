@@ -1,10 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:health_app/core/common/widgets/loader.dart';
 import 'package:health_app/features/auth/controller/auth_controller.dart';
+import 'package:health_app/features/professionals/chat/controller/chat_controller.dart';
 import 'package:health_app/features/public_user/chat/controller/chat_controller.dart';
 import 'package:health_app/theme/pallete.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import '../../../../core/common/widgets/show_snack_bar.dart';
 import 'chat.dart';
 
@@ -19,42 +22,23 @@ String? _message;
 
 class _StartChatScreenState extends ConsumerState<StartChatScreen> {
   final TextEditingController _controller = TextEditingController();
+  final ScrollController messageController = ScrollController();
 
   @override
   void dispose() {
     _controller.dispose();
     super.dispose();
+    messageController.dispose();
   }
 
   void sendMessage() {
     _controller.clear();
     if (_message != null) {
-      ref
-          .read(publicUserChatControllerProvider)
-          .sendMessage(_message ?? '', ref);
+      ref.read(publicUserChatControllerProvider).sendMessage(_message!, ref);
       _message = null;
     } else {
       showSnackBar(context: context, content: 'please enter a message');
     }
-  }
-
-  // messages stream
-  // get messages from db
-  Stream<QuerySnapshot<Map<String, dynamic>>> messageStream() {
-    final selectedProfessional = ref.watch(selectedProfessionalProvider);
-    final currentPublicUser = ref.read(publicUserProvider);
-    final snapshot = FirebaseFirestore.instance
-        .collection('users')
-        .doc('professionals')
-        .collection('professionals')
-        .doc(selectedProfessional.uid)
-        .collection('messages')
-        .doc(currentPublicUser?.uid)
-        .collection('messages')
-        .orderBy('timestamp', descending: true)
-        .snapshots();
-
-    return snapshot;
   }
 
   @override
@@ -108,56 +92,52 @@ class _StartChatScreenState extends ConsumerState<StartChatScreen> {
               ),
               // Expanded(child: Container()),
               StreamBuilder(
-                  stream: messageStream(),
-                  builder: ((context, snapshot) {
-                    if (!snapshot.hasData) {
+                  stream: ref
+                      .watch(professionalChatControllerProvider)
+                      .messageStream(),
+                  builder: ((context, messages) {
+                    if (!messages.hasData) {
                       return const Loader();
                     }
-                    final messages = snapshot.data!.docs;
-                    List<MessageBubble> messageBubbles = [];
-
-                    for (var message in messages) {
-                      final messageSenderID = message.data()['senderId'];
-                      final messageTxt = message.data()['content']!;
-                      final messageWidget = MessageBubble(
-                        text: messageTxt,
-                        isMe: currentPublicUserUID == messageSenderID,
-                      );
-                      messageBubbles.add(messageWidget);
-                    }
+                    SchedulerBinding.instance.addPostFrameCallback(
+                      (_) {
+                        messageController
+                            .jumpTo(messageController.position.maxScrollExtent);
+                      },
+                    );
+                    print(messages);
                     return Expanded(
-                      child: ListView(
-                        reverse: true,
-                        children: messageBubbles,
-                      ),
+                      child: ListView.builder(
+                          controller: messageController,
+                          reverse: true,
+                          itemCount: messages.data!.length,
+                          itemBuilder: ((context, index) {
+                            return MessageBubble(
+                                text: messages.data![index].content,
+                                isMe: currentPublicUserUID ==
+                                    messages.data![index].senderId);
+                          })),
                     );
 
                     // return Container();
                   })),
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 18.0),
-                child: TextField(
+                child: TextFormField(
                   controller: _controller,
-                  cursorColor: Colors.black,
                   decoration: InputDecoration(
-                    suffixIcon: InkWell(
-                      onTap: sendMessage,
-                      child: Icon(
-                        Icons.send,
-                        color: Colors.pink.shade300,
-                      ),
-                    ),
                     hintText: 'Message',
-                    hintStyle: const TextStyle(letterSpacing: 1.4),
-                    enabledBorder: const OutlineInputBorder(
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(20),
-                      ),
-                    ),
-                    focusedBorder: const OutlineInputBorder(
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(20),
-                      ),
+                    fillColor: Pallete.bgDarkerShade,
+                    suffixIcon: IconButton(
+                        onPressed: sendMessage,
+                        icon: Icon(
+                          MdiIcons.send,
+                          color: Pallete.greenColor,
+                        )),
+                    filled: true,
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide.none,
+                      borderRadius: BorderRadius.circular(20.0),
                     ),
                   ),
                   onChanged: (value) {

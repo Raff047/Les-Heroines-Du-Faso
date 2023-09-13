@@ -143,16 +143,3 @@ class ProfessionalCommunityRepository {
     });
   }
 }
-  
-
-
-
-// final snapshot = _post.snapshots().map((event) {
-//       final List<Post> posts = [];
-//       for (var doc in event.docs) {
-//         var post = Post.fromMap(doc.data() as Map<String, dynamic>);
-//         posts.add(post);
-//       }
-//       return posts;
-//     });
-//     return snapshot;

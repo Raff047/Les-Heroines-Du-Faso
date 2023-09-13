@@ -11,10 +11,7 @@ class Manager extends UserModel {
 
   @override
   Map<String, dynamic> toMap() {
-    final result = <String, dynamic>{};
-
-    result.addAll({});
-
+    final result = super.toMap();
     return result;
   }
 

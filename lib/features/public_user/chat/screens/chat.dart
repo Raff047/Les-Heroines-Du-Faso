@@ -43,108 +43,114 @@ class _ChatState extends ConsumerState<MainChatScreen> {
     return ref.watch(loadProfessionalsProvider).when(
         data: (data) {
           final professionals = data;
-
           final groupedProfessionals = <String, List<Professional>>{};
-
           // Group the professionals by their specializedIn field
           for (final professional in professionals) {
             final specializedIn = professional.specializedIn;
-
             if (!groupedProfessionals.containsKey(specializedIn)) {
               groupedProfessionals[specializedIn] = [];
             }
-
             groupedProfessionals[specializedIn]!.add(professional);
           }
-
-          return ListView.builder(
-            itemCount: groupedProfessionals.length,
-            itemBuilder: (context, index) {
-              final specializedIn = groupedProfessionals.keys.elementAt(index);
-              final professionalsInSpecialization =
-                  groupedProfessionals[specializedIn]!;
-
-              return Padding(
-                padding: const EdgeInsets.symmetric(
-                    horizontal: 25.0, vertical: 10.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(
-                      'Choisissez un professionnel à contacter',
-                      style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.w700,
-                          letterSpacing: 0.7),
+          return SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: Column(
+                children: [
+                  const Text(
+                    'Choisissez un professionnel à contacter',
+                    style: TextStyle(
+                      fontSize: 22.0,
+                      fontWeight: FontWeight.bold,
                     ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Text(
-                      specializedIn,
-                      style: const TextStyle(
-                        fontSize: 18.0,
-                        fontWeight: FontWeight.w600,
-                        letterSpacing: 1.2,
-                      ),
-                    ),
-                    SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.2,
-                      width: double.infinity,
-                      child: ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        itemCount: professionalsInSpecialization.length,
-                        itemBuilder: (context, index) {
-                          final professional =
-                              professionalsInSpecialization[index];
+                  ),
+                  const SizedBox(height: 15.0),
+                  Expanded(
+                    child: ListView.builder(
+                      itemCount: groupedProfessionals.length,
+                      itemBuilder: (context, index) {
+                        final specializedIn =
+                            groupedProfessionals.keys.elementAt(index);
+                        final professionalsInSpecialization =
+                            groupedProfessionals[specializedIn]!;
 
-                          return Padding(
-                            padding: const EdgeInsets.only(right: 18.0),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                GestureDetector(
-                                  onTap: () {
-                                    selectedProfessional.state = Professional(
-                                        role: professional.role,
-                                        uid: professional.uid,
-                                        name: professional.name,
-                                        email: professional.email,
-                                        profilePic: professional.profilePic,
-                                        specializedIn:
-                                            professional.specializedIn);
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                const StartChatScreen()));
-                                  },
-                                  child: CircleAvatar(
-                                    radius: 45.0,
-                                    backgroundImage:
-                                        NetworkImage(professional.profilePic),
-                                  ),
-                                ),
-                                const SizedBox(height: 10.0),
-                                Flexible(
-                                  child: Text(
-                                    'Dr. ${professional.name}',
-                                    style: const TextStyle(
-                                      fontSize: 14.0,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ),
-                              ],
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              specializedIn,
+                              style: const TextStyle(
+                                fontSize: 18.0,
+                                fontWeight: FontWeight.w600,
+                                letterSpacing: 1.2,
+                              ),
                             ),
-                          );
-                        },
-                      ),
+                            SizedBox(
+                              height: MediaQuery.of(context).size.height * 0.18,
+                              width: double.infinity,
+                              child: ListView.builder(
+                                scrollDirection: Axis.horizontal,
+                                itemCount: professionalsInSpecialization.length,
+                                itemBuilder: (context, index) {
+                                  final professional =
+                                      professionalsInSpecialization[index];
+
+                                  return Padding(
+                                    padding: const EdgeInsets.only(right: 10.0),
+                                    child: Column(
+                                      children: [
+                                        const SizedBox(height: 15.0),
+                                        GestureDetector(
+                                          onTap: () {
+                                            selectedProfessional.state =
+                                                Professional(
+                                                    role: professional.role,
+                                                    uid: professional.uid,
+                                                    name: professional.name,
+                                                    email: professional.email,
+                                                    profilePic:
+                                                        professional.profilePic,
+                                                    specializedIn: professional
+                                                        .specializedIn);
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        const StartChatScreen()));
+                                          },
+                                          child: CircleAvatar(
+                                            radius: 45.0,
+                                            backgroundImage: NetworkImage(
+                                                professional.profilePic),
+                                          ),
+                                        ),
+                                        const SizedBox(height: 10.0),
+                                        Expanded(
+                                          child: Text(
+                                            'Dr. ${professional.name}',
+                                            textAlign: TextAlign.center,
+                                            maxLines: 2,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: const TextStyle(
+                                                fontSize: 12.0,
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.white),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  );
+                                },
+                              ),
+                            ),
+                          ],
+                        );
+                      },
                     ),
-                  ],
-                ),
-              );
-            },
+                  ),
+                ],
+              ),
+            ),
           );
         },
         error: (error, stackTrace) => ErrorText(error: '$error'),

@@ -17,12 +17,13 @@ class _ExpandableTextState extends State<ExpandableText> {
   @override
   Widget build(BuildContext context) {
     return RichText(
+      overflow: TextOverflow.ellipsis,
       text: TextSpan(
         text: _isExpanded
             ? widget.text
             : widget.text.substring(0, widget.maxLength),
         style: const TextStyle(
-          fontSize: 16.0,
+          fontSize: 14.0,
         ),
         children: <TextSpan>[
           _isExpanded

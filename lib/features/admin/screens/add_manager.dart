@@ -20,8 +20,8 @@ class _AddManagerScreenState extends ConsumerState<AddManagerScreen> {
 
   void addManager() {
     if (_name != null && _email != null && _password != null) {
-      ref.watch(adminControllerProvider).createAdmin(
-          name: _name, email: _email, password: _password, context: context);
+      ref.watch(adminControllerProvider).createManager(
+          name: _name!, email: _email!, password: _password!, context: context);
     } else {
       showSnackBar(
           context: context, content: 'Veuillez remplir tous les champs');
@@ -36,6 +36,14 @@ class _AddManagerScreenState extends ConsumerState<AddManagerScreen> {
           padding: const EdgeInsets.symmetric(vertical: 25.0, horizontal: 15.0),
           child: Column(
             children: [
+              ArticleForm(
+                hintText: 'Manager 1',
+                onChanged: (value) {
+                  setState(() {
+                    _name = value;
+                  });
+                },
+              ),
               ArticleForm(
                 hintText: 'nom@gmail.com',
                 onChanged: (value) {

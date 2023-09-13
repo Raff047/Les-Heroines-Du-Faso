@@ -46,8 +46,8 @@ class ProfessionalChatRepository {
     final ProviderRef ref,
   ) async {
     try {
-      final professionalUser = ref.watch(professionalUserProvider);
-      final publicUserSender = ref.watch(selectedSenderProvider).uid;
+      final professionalUser = ref.read(professionalUserProvider);
+      final publicUserSender = ref.read(selectedSenderProvider).uid;
       var timesent = DateTime.now();
       if (textmessage != null) {
         const messageId = Uuid();
@@ -82,9 +82,7 @@ class ProfessionalChatRepository {
   // load messages
   Stream<List<Message>> messageStream(
       String currentProfessionalUID, String selectedSenderUID) {
-    // final selectedSender = ref.watch(selectedSenderProvider.notifier).state;
-    // final currentProfessional = ref.watch(professionalUserProvider);
-    final snapshot = _firestore
+    return _firestore
         .collection('users')
         .doc('professionals')
         .collection('professionals')
@@ -94,7 +92,7 @@ class ProfessionalChatRepository {
         .collection('messages')
         .orderBy('timestamp', descending: true)
         .snapshots()
-        .map((event) {
+        .asyncMap((event) async {
       final List<Message> messages = [];
       for (var doc in event.docs) {
         var message = Message.fromMap(doc.data());
@@ -102,7 +100,5 @@ class ProfessionalChatRepository {
       }
       return messages;
     });
-
-    return snapshot;
   }
 }

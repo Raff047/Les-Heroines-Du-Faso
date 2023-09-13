@@ -48,81 +48,83 @@ class _ProfessionalForumScreenState
           }
 
           return Scaffold(
-            // backgroundColor: primary,
             body: SafeArea(
               child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 8.0, horizontal: 8.0),
-                child: Column(
-                  children: [
-                    const Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: Text(
-                        'Rejoignez nos communautés ',
-                        style: TextStyle(fontSize: 28.0),
+                padding: const EdgeInsets.all(8.0),
+                child: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      const Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: Text(
+                          'Ensemble pour votre santé ',
+                          style: TextStyle(fontSize: 22.0),
+                        ),
                       ),
-                    ),
-                    const SizedBox(
-                      height: 5.0,
-                    ),
-                    const Text(
-                      'Ensemble pour votre santé',
-                      style: TextStyle(fontSize: 24.0),
-                    ),
-                    const SizedBox(
-                      height: 25.0,
-                    ),
-                    Row(
-                      children: [
-                        // community card
-                        Expanded(
-                          child: CommunityCard(
-                            isSelected: selectedCommunityIndex == 0,
-                            onTap: () => onCommunityTap(0),
-                            name: santeGenerale.name,
-                            description: santeGenerale.description,
-                            banner: santeGenerale.banner,
-                            screenHeight: screenHeight,
-                          ),
+                      const SizedBox(height: 5.0),
+                      const FittedBox(
+                        child: Text(
+                          'Rejoignez nos communautés',
+                          style: TextStyle(
+                              fontSize: 28.0, fontWeight: FontWeight.bold),
                         ),
-                        Expanded(
-                          child: CommunityCard(
-                            isSelected: selectedCommunityIndex == 1,
-                            onTap: () => onCommunityTap(1),
-                            name: santeMentale.name,
-                            description: santeMentale.description,
-                            banner: santeMentale.banner,
-                            screenHeight: screenHeight,
+                      ),
+                      const SizedBox(
+                        height: 25.0,
+                      ),
+                      Row(
+                        children: [
+                          // community card
+                          Expanded(
+                            child: CommunityCard(
+                              isSelected: selectedCommunityIndex == 0,
+                              onTap: () => onCommunityTap(0),
+                              name: santeGenerale.name,
+                              description: santeGenerale.description,
+                              banner: santeGenerale.banner,
+                              screenHeight: screenHeight,
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        // community card
-                        Expanded(
-                          child: CommunityCard(
-                            isSelected: selectedCommunityIndex == 2,
-                            onTap: () => onCommunityTap(2),
-                            name: santeReproductive.name,
-                            description: santeReproductive.description,
-                            banner: santeReproductive.banner,
-                            screenHeight: screenHeight,
+                          Expanded(
+                            child: CommunityCard(
+                              isSelected: selectedCommunityIndex == 1,
+                              onTap: () => onCommunityTap(1),
+                              name: santeMentale.name,
+                              description: santeMentale.description,
+                              banner: santeMentale.banner,
+                              screenHeight: screenHeight,
+                            ),
                           ),
-                        ),
-                        Expanded(
-                          child: CommunityCard(
-                            isSelected: selectedCommunityIndex == 3,
-                            onTap: () => onCommunityTap(3),
-                            name: santeSexuelle.name,
-                            description: santeSexuelle.description,
-                            banner: santeSexuelle.banner,
-                            screenHeight: screenHeight,
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          // community card
+                          Expanded(
+                            child: CommunityCard(
+                              isSelected: selectedCommunityIndex == 2,
+                              onTap: () => onCommunityTap(2),
+                              name: santeReproductive.name,
+                              description: santeReproductive.description,
+                              banner: santeReproductive.banner,
+                              screenHeight: screenHeight,
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
-                  ],
+                          Expanded(
+                            child: CommunityCard(
+                              isSelected: selectedCommunityIndex == 3,
+                              onTap: () => onCommunityTap(3),
+                              name: santeSexuelle.name,
+                              description: santeSexuelle.description,
+                              banner: santeSexuelle.banner,
+                              screenHeight: screenHeight,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),

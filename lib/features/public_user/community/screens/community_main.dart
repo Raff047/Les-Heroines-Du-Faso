@@ -53,13 +53,20 @@ class _ForumState extends ConsumerState<PublicUserCommunityMainScreen> {
                   const EdgeInsets.symmetric(vertical: 8.0, horizontal: 8.0),
               child: Column(
                 children: [
-                  const Text(
-                    'Explore our',
-                    style: TextStyle(fontSize: 28.0),
+                  const Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Text(
+                      'Ensemble pour votre santé ',
+                      style: TextStyle(fontSize: 22.0),
+                    ),
                   ),
-                  const Text(
-                    'Communities',
-                    style: TextStyle(fontSize: 34.0),
+                  const SizedBox(height: 5.0),
+                  const FittedBox(
+                    child: Text(
+                      'Rejoignez nos communautés',
+                      style: TextStyle(
+                          fontSize: 28.0, fontWeight: FontWeight.bold),
+                    ),
                   ),
                   const SizedBox(
                     height: 25.0,

@@ -41,7 +41,7 @@ class AdminRepository {
 
   // Create manager
   Future<Manager> createManager(
-      String email, String password, String displayName) async {
+      String displayName, String email, String password) async {
     HttpsCallable callable =
         _adminCloudFunctions.httpsCallable('createManager');
     final result = await callable.call({

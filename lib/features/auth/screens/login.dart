@@ -45,24 +45,6 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     }
   }
 
-  void sendEmailAndPassword() async {
-    try {
-      final user = await ref
-          .read(authControllerProvider.notifier)
-          .signInForOthersWithEmail(context, email, password);
-
-      user.fold((l) => showSnackBar(context: context, content: l.message),
-          (user) {
-        if (user != null) {
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => SmartAuthWrapper()));
-        }
-      });
-    } catch (e) {
-      showSnackBar(context: context, content: e.toString());
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     //trick to fix textfield input direction
@@ -205,55 +187,129 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                       SizedBox(
                         height: 50,
                       ),
-                      Text(
-                        'For Personal',
-                        style: TextStyle(fontSize: 16.0),
-                      ),
-                      SizedBox(
-                        height: 25,
-                      ),
-
-                      //email textfield
-                      TextFormField(
-                        keyboardType: TextInputType.emailAddress,
-                        decoration: InputDecoration(
-                          hintText: 'Email',
-                        ),
-                        onChanged: (value) {
-                          setState(() {
-                            email = value;
-                          });
-                        },
-                      ),
-
-                      SizedBox(
-                        height: 12.0,
-                      ),
-
-                      //password textfield
-                      TextFormField(
-                        obscureText: true,
-                        keyboardType: TextInputType.emailAddress,
-                        decoration: InputDecoration(
-                          hintText: 'password',
-                        ),
-                        onChanged: (value) {
-                          setState(() {
-                            password = value;
-                          });
-                        },
-                      ),
-                      SizedBox(
-                        height: 12.0,
-                      ),
-                      CustomButton(
-                          onPressed: () => sendEmailAndPassword(),
-                          text: 'connect'),
+                      // Expanded(child: Container()),
+                      TextButton(
+                          onPressed: () {
+                            Future(() => showModalBottomSheet(
+                                useSafeArea: true,
+                                isScrollControlled: true,
+                                context: context,
+                                builder: (context) {
+                                  return AssociationPortal();
+                                }));
+                          },
+                          child: Text('Portail de l\'association')),
                     ],
                   ),
                 ),
               ),
             ),
+    );
+  }
+}
+
+class AssociationPortal extends ConsumerStatefulWidget {
+  AssociationPortal({super.key});
+
+  @override
+  ConsumerState<AssociationPortal> createState() => _AssociationPortalState();
+}
+
+class _AssociationPortalState extends ConsumerState<AssociationPortal> {
+  String? email;
+
+  String? password;
+
+  void sendEmailAndPassword() async {
+    try {
+      final user = await ref
+          .read(authControllerProvider.notifier)
+          .signInForOthersWithEmail(context, email, password);
+
+      user.fold((l) => showSnackBar(context: context, content: l.message),
+          (user) {
+        if (user != null) {
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => SmartAuthWrapper()));
+        }
+      });
+    } catch (e) {
+      showSnackBar(context: context, content: e.toString());
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: MediaQuery.of(context).size.height,
+      padding: const EdgeInsets.all(25),
+      color: Pallete.blackColor,
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            CircleAvatar(
+              backgroundImage: AssetImage('assets/images/logo.jpg'),
+              radius: 55,
+            ),
+            SizedBox(height: 15.0),
+            const Text(
+              'Connectez-vous en tant que membre de l\'association en utilisant votre adresse e-mail et votre mot de passe',
+              textAlign: TextAlign.center,
+              style: TextStyle(color: Colors.white70, fontSize: 15),
+            ),
+            SizedBox(height: 25.0),
+            //email textfield
+            TextFormField(
+              textAlign: TextAlign.center,
+              keyboardType: TextInputType.emailAddress,
+              decoration: InputDecoration(
+                hintText: 'E-mail',
+                fillColor: Pallete.bgDarkerShade,
+                filled: true,
+                border: OutlineInputBorder(
+                  borderSide: BorderSide.none,
+                  borderRadius: BorderRadius.circular(20.0),
+                ),
+              ),
+              onChanged: (value) {
+                setState(() {
+                  email = value;
+                });
+              },
+            ),
+
+            SizedBox(
+              height: 12.0,
+            ),
+
+            //password textfield
+            TextFormField(
+              textAlign: TextAlign.center,
+              obscureText: true,
+              keyboardType: TextInputType.emailAddress,
+              decoration: InputDecoration(
+                hintText: 'Mot de passe',
+                fillColor: Pallete.bgDarkerShade,
+                filled: true,
+                border: OutlineInputBorder(
+                  borderSide: BorderSide.none,
+                  borderRadius: BorderRadius.circular(20.0),
+                ),
+              ),
+              onChanged: (value) {
+                setState(() {
+                  password = value;
+                });
+              },
+            ),
+            SizedBox(
+              height: 12.0,
+            ),
+            CustomButton(
+                onPressed: () => sendEmailAndPassword(), text: 'Connexion'),
+          ],
+        ),
+      ),
     );
   }
 }

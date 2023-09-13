@@ -12,6 +12,7 @@ class ArticleImageContainer extends StatelessWidget {
     this.borderRadius,
     this.boxShadow,
     this.child,
+    this.colorFilter,
   }) : super(key: key);
 
   final double width;
@@ -22,6 +23,7 @@ class ArticleImageContainer extends StatelessWidget {
   final BorderRadius? borderRadius;
   final List<BoxShadow>? boxShadow;
   final Widget? child;
+  final ColorFilter? colorFilter;
 
   @override
   Widget build(BuildContext context) {
@@ -40,6 +42,7 @@ class ArticleImageContainer extends StatelessWidget {
               Color(0xffffc3a0),
             ]),
         image: DecorationImage(
+          colorFilter: colorFilter,
           image: NetworkImage(imageUrl),
           fit: BoxFit.cover,
         ),

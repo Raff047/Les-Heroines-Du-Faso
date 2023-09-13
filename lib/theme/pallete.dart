@@ -10,15 +10,22 @@ final themeNotifierProvider =
 });
 
 class Pallete {
+  static const TextStyle bodyTextStyle = TextStyle(
+    fontFamily: 'OpenSans', // set your desired font family here
+    fontSize: 16.0,
+    fontWeight: FontWeight.normal,
+    color: Colors.white,
+  );
   // Colors
 
   // 0xff1F1D2C to think about
 
   //0xff383C52
-  static const blackColor = Color(0xff383C52);
-  static const bgDarkerShade = Color(0xff383C52); // primary color
+  static const blackColor = Color(0xff1F1D2C); // main bg color
+  static const bgDarkerShade =
+      Color(0xff383C52); // primary old color for comment box
   static const greyColor = Color.fromRGBO(26, 39, 45, 1); // secondary color
-  static const drawerColor = Color(0xff383C52);
+  static const drawerColor = Color(0xff1F1D2C);
   static const whiteColor = Colors.white;
   static var redColor = Colors.red.shade500;
   static var blueColor = Colors.blue.shade300;
@@ -26,6 +33,9 @@ class Pallete {
 
   // Themes
   static var darkModeAppTheme = ThemeData.dark().copyWith(
+    textTheme: const TextTheme(
+      bodyMedium: bodyTextStyle,
+    ),
     scaffoldBackgroundColor: blackColor,
     cardColor: greyColor,
     appBarTheme: const AppBarTheme(

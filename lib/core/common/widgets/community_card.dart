@@ -40,18 +40,22 @@ class CommunityCard extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                name,
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 30.0,
-                  letterSpacing: 1.6,
-                  fontWeight: FontWeight.bold,
+              FittedBox(
+                fit: BoxFit.cover,
+                child: Text(
+                  name,
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 32,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
-              Text(
-                description,
-                style: const TextStyle(color: Colors.white, fontSize: 15.0),
+              Flexible(
+                child: Text(
+                  description,
+                  style: const TextStyle(color: Colors.white, fontSize: 15.0),
+                ),
               ),
             ],
           ),
