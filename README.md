@@ -1,3 +1,5 @@
+![Main Screen](./screenshots/app_main_screen.png)
+
 # Introduction ☕
 
 This project was undertaken as part of the course "Introduction to Product Development and Management for Engineers and Computer Scientists" at the University of Ottawa. Collaborated directly with a client to fulfill their product requirements. My aim was to create a mobile application focused on improving women's sexual health. The app provides reliable and accessible information on genital health care, contraception, sexually transmitted infections (STIs), and sexual violence. Additionally, the app includes functionalities to help users track their menstrual cycles and schedule appointments with specialists.
@@ -67,4 +69,3 @@ To conclude, the client needs a mobile application that is accessible and compat
 
 - The class uses Riverpod's `ConsumerStatefulWidget` and `ConsumerState` for managing the state.
 - The method `ref.watch(authStateChangeProvider).when(...)` listens to changes in the authentication state and triggers UI updates accordingly.
-  > > > > > > > master
