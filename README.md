@@ -67,4 +67,3 @@ To conclude, the client needs a mobile application that is accessible and compat
 
 - The class uses Riverpod's `ConsumerStatefulWidget` and `ConsumerState` for managing the state.
 - The method `ref.watch(authStateChangeProvider).when(...)` listens to changes in the authentication state and triggers UI updates accordingly.
-  > > > > > > > master
