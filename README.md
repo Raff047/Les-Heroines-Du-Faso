@@ -1,4 +1,8 @@
-![Main Screen](./screenshots/app_main_screen.png)
+<p float="left">
+  <img src="./screenshots/Screenshot_1680140692.png" width="30%" />
+  <img src="./screenshots/Screenshot_1680140708.png" width="30%" /> 
+  <img src="./screenshots/Screenshot_1680140710.png" width="30%" />
+</p>
 
 # Introduction ☕
 
