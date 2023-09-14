@@ -73,3 +73,29 @@ To conclude, the client needs a mobile application that is accessible and compat
 
 - The class uses Riverpod's `ConsumerStatefulWidget` and `ConsumerState` for managing the state.
 - The method `ref.watch(authStateChangeProvider).when(...)` listens to changes in the authentication state and triggers UI updates accordingly.
+
+### Screenshots
+
+<p float="left">
+  <img src="./screenshots/Screenshot_1679299871.png" width="30%" />
+  <img src="./screenshots/Screenshot_1680137228.png" width="30%" />
+  <img src="./screenshots/Screenshot_1680137143.png" width="30%" />
+  <img src="./screenshots/Screenshot_1680136979.png" width="30%" /> 
+  <img src="./screenshots/Screenshot_1680137264.png" width="30%" /> 
+  <img src="./screenshots/Screenshot_1680137359.png" width="30%" /> 
+  <img src="./screenshots/Screenshot_1680137443.png" width="30%" /> 
+  <img src="./screenshots/Screenshot_1680137507.png" width="30%" /> 
+  <img src="./screenshots/Screenshot_1680137803.png" width="30%" /> 
+  <img src="./screenshots/Screenshot_1680137808.png" width="30%" /> 
+  <img src="./screenshots/Screenshot_1680137970.png" width="30%" /> 
+  <img src="./screenshots/Screenshot_1680137974.png" width="30%" /> 
+  <img src="./screenshots/Screenshot_1680137995.png" width="30%" /> 
+  <img src="./screenshots/Screenshot_1680138122.png" width="30%" /> 
+  <img src="./screenshots/Screenshot_1680142923.png" width="30%" /> 
+  <img src="./screenshots/Screenshot_1680141286.png" width="30%" /> 
+  <img src="./screenshots/Screenshot_1680139389.png" width="30%" /> 
+  <img src="./screenshots/Screenshot_1680138465.png" width="30%" /> 
+  <img src="./screenshots/Screenshot_1680138415.png" width="30%" /> 
+  <img src="./screenshots/Screenshot_1680138390.png" width="30%" /> 
+  
+</p>
