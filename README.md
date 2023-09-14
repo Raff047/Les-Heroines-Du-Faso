@@ -97,5 +97,4 @@ To conclude, the client needs a mobile application that is accessible and compat
   <img src="./screenshots/Screenshot_1680138465.png" width="30%" /> 
   <img src="./screenshots/Screenshot_1680138415.png" width="30%" /> 
   <img src="./screenshots/Screenshot_1680138390.png" width="30%" /> 
-  
 </p>
